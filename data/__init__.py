@@ -4,6 +4,7 @@ from torchvision import transforms
 from torchvision.transforms.functional import InterpolationMode
 
 from data.coco_karpathy_dataset import coco_karpathy_train, coco_karpathy_caption_eval, coco_karpathy_retrieval_eval
+from data.diffusiondb_dataset import DiffusionDbTrain, DiffusionDbEval
 from data.nocaps_dataset import nocaps_eval
 from data.flickr30k_dataset import flickr30k_train, flickr30k_retrieval_eval
 from data.vqa_dataset import vqa_dataset
@@ -38,7 +39,13 @@ def create_dataset(dataset, config, min_scale=0.5):
         val_dataset = coco_karpathy_caption_eval(transform_test, config['image_root'], config['ann_root'], 'val')
         test_dataset = coco_karpathy_caption_eval(transform_test, config['image_root'], config['ann_root'], 'test')   
         return train_dataset, val_dataset, test_dataset
-    
+
+    elif dataset == 'caption_diffusiondb':
+        train_dataset = DiffusionDbTrain(transform_train, config['image_root'], config['ann_root'], prompt=config['prompt'])
+        val_dataset = DiffusionDbEval(transform_test, config['image_root'], config['ann_root'], 'val')
+        test_dataset = DiffusionDbEval(transform_test, config['image_root'], config['ann_root'], 'test')
+        return train_dataset, val_dataset, test_dataset
+
     elif dataset=='nocaps':   
         val_dataset = nocaps_eval(transform_test, config['image_root'], config['ann_root'], 'val')
         test_dataset = nocaps_eval(transform_test, config['image_root'], config['ann_root'], 'test')   
