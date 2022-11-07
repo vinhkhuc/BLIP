@@ -1,0 +1,19 @@
+name: blip
+channels:
+  - pytorch
+  - defaults
+dependencies:
+  - python=3.8.5
+  - pip=20.3
+  - cudatoolkit=11.1
+  - pytorch=1.10.1
+  - torchvision=0.11.2
+  - numpy=1.23.3
+  - pip:
+    - timm==0.4.12
+    - transformers==4.15.0
+    - fairscale==0.4.4
+    - opencv-python
+    - pycocoevalcap
+    - pandas
+    - ruamel.yaml

@@ -35,8 +35,8 @@ class DiffusionDbTrain(Dataset):
     def __getitem__(self, index):    
         
         ann = self.annotation_df.iloc[index]
-        
-        image_path = os.path.join(self.image_root,ann['image_name'])
+
+        image_path = os.path.join(self.image_root, f"part-{ann['part_id']:06}", ann['image_name'])
         image = Image.open(image_path).convert('RGB')   
         image = self.transform(image)
         
@@ -65,7 +65,7 @@ class DiffusionDbEval(Dataset):
         
         ann = self.annotation_df.iloc[index]
         
-        image_path = os.path.join(self.image_root,ann['image_name'])
+        image_path = os.path.join(self.image_root, f"part-{ann['part_id']:06}", ann['image_name'])
         image = Image.open(image_path).convert('RGB')   
         image = self.transform(image)          
         

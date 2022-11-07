@@ -1,5 +1,5 @@
 image_root: '/home/ubuntu/diffusiondb/images/'
-ann_root: '/home/ubuntu/diffusiondb'
+ann_root: '/home/ubuntu/diffusiondb/split'
 
 # set pretrained as a file path or an url
 pretrained: 'https://storage.googleapis.com/sfr-vision-language-research/BLIP/models/model_base_capfilt_large.pth'
