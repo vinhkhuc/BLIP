@@ -70,15 +70,15 @@ def evaluate(model, data_loader, device, config):
     print_freq = 10
 
     result = []
-    for image, image_id in metric_logger.log_every(data_loader, print_freq, header):
+    for images, image_names in metric_logger.log_every(data_loader, print_freq, header):
 
-        image = image.to(device)
+        images = images.to(device)
 
-        captions = model.generate(image, sample=False, num_beams=config['num_beams'], max_length=config['max_length'],
+        captions = model.generate(images, sample=False, num_beams=config['num_beams'], max_length=config['max_length'],
                                   min_length=config['min_length'])
 
-        for caption, img_id in zip(captions, image_id):
-            result.append({"image_id": img_id.item(), "caption": caption})
+        for caption, img_name in zip(captions, image_names):
+            result.append({"image_name": img_name, "caption": caption})
 
     return result
 
@@ -140,10 +140,10 @@ def main(args, config):
             train_stats = train(model, train_loader, optimizer, epoch, device)
 
         val_result = evaluate(model_without_ddp, val_loader, device, config)
-        val_result_file = save_result(val_result, args.result_dir, 'val_epoch%d'%epoch, remove_duplicate='image_id')
+        val_result_file = save_result(val_result, args.result_dir, 'val_epoch%d'%epoch, remove_duplicate='image_name')
 
         test_result = evaluate(model_without_ddp, test_loader, device, config)
-        test_result_file = save_result(test_result, args.result_dir, 'test_epoch%d'%epoch, remove_duplicate='image_id')
+        test_result_file = save_result(test_result, args.result_dir, 'test_epoch%d'%epoch, remove_duplicate='image_name')
 
         # @khuc: Removed COCO-specific evaluation
         # if utils.is_main_process():

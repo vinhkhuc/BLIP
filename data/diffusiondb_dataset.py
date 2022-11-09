@@ -40,9 +40,9 @@ class DiffusionDbTrain(Dataset):
         image = Image.open(image_path).convert('RGB')   
         image = self.transform(image)
         
-        prompt = self.prompt+pre_caption(ann['prompt'], self.max_words)
+        prompt = self.prompt+pre_caption(str(ann['prompt']), self.max_words)
 
-        return image, prompt, self.img_names[ann['image_id']]
+        return image, prompt, self.img_names[ann['image_name']]
     
     
 class DiffusionDbEval(Dataset):
@@ -69,6 +69,6 @@ class DiffusionDbEval(Dataset):
         image = Image.open(image_path).convert('RGB')   
         image = self.transform(image)          
         
-        img_id = ann['image_name'][:-len(".png")]
+        img_name = ann['image_name'][:-len(".png")]
         
-        return image, int(img_id)   
+        return image, img_name
